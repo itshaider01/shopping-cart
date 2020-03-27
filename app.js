@@ -2,7 +2,17 @@ const express = require('express');
 const morgan = require('morgan');
 const bodyparser = require('body-parser');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const app = express();
+const credentials = require('./config/database');
+
+mongoose.connect(
+    `mongodb+srv://${credentials.USERNAME}:${credentials.PASSWORD}@shopping-cart-s34e9.mongodb.net/test?retryWrites=true&w=majority`,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
+)
 
 const productsRoute = require('./api/routes/products');
 const ordersRoute = require('./api/routes/orders');
