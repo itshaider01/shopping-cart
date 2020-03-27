@@ -9,16 +9,18 @@ router.get('/',(req,res,next) =>
 }
 )
 
-router.post('/',(req,res,next) =>
-{
+router.post('/',(req,res) => {
+    const {name, id} = req.body;
     res.status(200).json({
-        message: "Post request accepted!"
+        message: "Post request accepted!",
+        data: {
+            id,
+            name    
+        }
     });
-    next();
-}
-)
+});
 
-router.get('/:id',(req,res,next) =>
+router.get('/:id',(req,res) =>
 {
     const id = req.params.id;
     res.status(200).json({

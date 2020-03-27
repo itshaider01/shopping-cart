@@ -1,21 +1,22 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/',(req,res,next) =>
-{
+router.get('/',(req,res) =>{
     res.status(200).json({
         message: "Order's Get request accepted!"
-    })
-}
-)
+    });
+});
 
-router.post('/',(req,res,next) =>
-{
+router.post('/',(req,res) => {
+    const {name, id} = req.body;
     res.status(200).json({
-        message: "Order's Post request accepted!"
-    })
-}
-)
+        message: "Post request accepted!",
+        data: {
+            id,
+            name    
+        }
+    });
+});
 
 router.get('/:id',(req,res,next) =>
 {
