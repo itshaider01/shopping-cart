@@ -32,7 +32,6 @@ router.get('/:id',(req,res) =>
     res.status(200).json({
         message: `Get ID ${id} request accepted!`
     })
-}
-)
+})
 
 module.exports = router;
