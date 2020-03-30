@@ -18,6 +18,18 @@ router.post('/',(req,res) => {
     });
 });
 
+router.patch('/', (req,res) =>{
+    res.status(200).json({
+        message: "Update request accepted!"
+    });
+});
+
+router.delete('/', (req,res) =>{
+    res.status(200).json({
+        message: "Removal request accepted!"
+    });
+});
+
 router.get('/:id',(req,res,next) =>
 {
     const id = req.params.id;
