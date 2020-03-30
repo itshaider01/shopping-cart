@@ -7,7 +7,7 @@ const app = express();
 const credentials = require('./config/database');
 
 mongoose.connect(
-    `mongodb+srv://${credentials.USERNAME}:${credentials.PASSWORD}@shopping-cart-s34e9.mongodb.net/test?retryWrites=true&w=majority`,
+    `mongodb+srv://haider:haider@shopping-cart-s34e9.mongodb.net/test?retryWrites=true&w=majority`,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
