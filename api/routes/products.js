@@ -2,9 +2,12 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const Product = require("../models/product");
+const multer = require('multer')
+const upload = multer({dest: 'uploads/'})
 
 router.get("/", (req, res, next) => {
   Product.find()
+    .select("name price _id")
     .exec()
     .then(doc => {
       const response = {
@@ -29,7 +32,8 @@ router.get("/", (req, res, next) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", upload.single('productImage'), (req, res) => {
+  console.log(req.file);
   const { name, price } = req.body;
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
@@ -109,8 +113,14 @@ router.get("/:id", (req, res) => {
   Product.findById(id)
     .exec()
     .then(doc => {
-      console.log(doc);
-      res.status(200).json(doc);
+      if (doc) {
+        console.log(doc);
+        res.status(200).json(doc);
+      } else {
+        res.status(404).json({
+          status: "Product not Found!"
+        });
+      }
     })
     .catch(err => {
       console.log(err);
