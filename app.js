@@ -18,14 +18,17 @@ mongoose.Promise = global.Promise;
 
 const productsRoute = require("./api/routes/products");
 const ordersRoute = require("./api/routes/orders");
+const userRoute = require("./api/routes/users");
 
 app.use(morgan("dev"));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 app.use(cors());
 
 app.use("/products", productsRoute);
 app.use("/orders", ordersRoute);
+app.use("/user", userRoute);
 
 app.use((req, res, next) => {
   const error = new Error("Found an error");

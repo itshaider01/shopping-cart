@@ -24,12 +24,13 @@ const upload = multer({
   storage: storage,
   limits: {
     fileSize: 1024 * 1024 * 5
-  }
+  },
+  fileFilter
 });
 
 router.get("/", (req, res, next) => {
   Product.find()
-    .select("name price _id")
+    .select("name price _id productImage")
     .exec()
     .then(doc => {
       const response = {
@@ -39,6 +40,7 @@ router.get("/", (req, res, next) => {
             name: doc.name,
             price: doc.price,
             id: doc._id,
+            productImage: doc.productImage,
             request: {
               type: "GET",
               url: `http://localhost:5000/${doc._id}`
@@ -61,7 +63,7 @@ router.post("/", upload.single("productImage"), (req, res) => {
     _id: new mongoose.Types.ObjectId(),
     name,
     price,
-    productImage
+    productImage: filePath
   });
   product
     .save()
