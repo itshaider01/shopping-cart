@@ -21,24 +21,54 @@ router.post("/signup", (req, res) => {
             email,
             password: hash
           });
-          user.save()
-          .then(result => {
-            res.status(200).json(result);
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-          });
+          user
+            .save()
+            .then(result => {
+              res.status(200).json(result);
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json(err);
+            });
         }
       });
     }
   });
+});
 
+router.post("/login", (req, res) => {
+  User.find({ email: req.body.email })
+    .exec()
+    .then(users => {
+      if (users.length < 1) {
+        return res.status(401).json({
+          status: "Auth Failed!"
+        });
+      }
+      bcrypt.compare(req.body.password, users[0].password, (err, result) => {
+        if (err) {
+          return res.status(401).json({
+            status: "Auth Failed!"
+          });
+        }
+        if (result) {
+          return res.status(200).json({
+            status: "Auth Succussful!"
+          });
+        }
+        res.status(401).json({
+          status: "Auth Failed!"
+        });
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
 });
 
 router.delete("/:userId", (req, res) => {
-  User
-    .remove({ _id: req.params.userId })
+  User.remove({ _id: req.params.userId })
     .exec()
     .then(result => {
       res.status(200).json({
@@ -46,6 +76,7 @@ router.delete("/:userId", (req, res) => {
       });
     })
     .catch(err => {
+      console.log(err);
       res.status(500).json(err);
     });
 });

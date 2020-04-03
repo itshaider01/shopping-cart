@@ -14,7 +14,7 @@ mongoose.connect(
     useUnifiedTopology: true
   }
 );
-mongoose.Promise = global.Promise;
+// mongoose.Promise = global.Promise;
 
 const productsRoute = require("./api/routes/products");
 const ordersRoute = require("./api/routes/orders");

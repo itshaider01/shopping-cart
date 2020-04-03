@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const uuid  = require('uuid')
+const uuid = require("uuid");
 const Product = require("../models/product");
 const multer = require("multer");
 
@@ -10,7 +10,7 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/");
   },
   filename: (req, file, cb) => {
-    cb(null,  file.originalname);
+    cb(null, file.originalname);
   }
 });
 
@@ -58,7 +58,7 @@ router.get("/", (req, res, next) => {
 
 router.post("/", upload.single("productImage"), (req, res) => {
   console.log(req.file);
-  const { name, price, productImage  } = req.body;
+  const { name, price, productImage } = req.body;
   const product = new Product({
     _id: new mongoose.Types.ObjectId(),
     name,
